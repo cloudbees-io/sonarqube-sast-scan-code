@@ -1,0 +1,33 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: action
+name: sonarqube
+inputs:
+  server-url:
+    required: true
+  username:
+    required: true
+  password:
+    required: true
+  language:
+    required: false
+runs:
+  using: composite
+  steps:
+    - id: run-orchestrator
+      name: sonarqube
+      uses: docker://registry.saas-dev.beescloud.com/staging/compliance-sonarqube:main-cc0182b6802d0879071ecce528ced68853b778ad
+      shell: bash
+      env:
+        CONFIG_JSON: '{\"metaInfo\":{\"url\":\"${{ inputs.server-url }}/\",\"username\":\"${{ inputs.username }}\",\"password\":\"${{ inputs.password }}\",\"client_secret\":\"NA\",\"toolName\":\"sonarqube\"},\"orchestratorInfo\":{\"language\":\"${{ inputs.language }}\",\"assetType\":\"CODE\",\"assetIdentifier\":\"${{ cloudbees.scm.repositoryUrl }}\",\"profileIdentifier\":\"${{ cloudbees.scm.branch }}\"},\"metaInformation\":{\"actor\":\"${{ cloudbees.event.head_commit.author.username }}\",\"commit_id\":\"${{ cloudbees.event.head_commit.id }}\",\"tenent_info\":\"NA\",\"scanner_type\":\"SAST\"}}'
+        RUN_ID: ${{ cloudbees.run_id }}
+        STEP_ID: ${{ step.internal.id }}
+        JOB_ID: ${{ job.id }}
+        DNS_URL: ${{ cloudbees.api.url }}
+        JWT_TOKEN: ${{ cloudbees.api.token }}
+      run: |
+        set -x
+        echo "RUN ID: ${{ cloudbees.run_id }}"
+        echo "Job ID: ${{ job.id }}"
+        echo "Step ID: ${{ step.internal.id }}"
+        cd /
+        /bin/bash -c "java -jar ./executables/sonarqube-analyzer.jar & while ! nc -z localhost 5001; do sleep 1; done && ./executables/orchestrator -scanConfig \"${CONFIG_JSON}\" execute-analyser && exit"

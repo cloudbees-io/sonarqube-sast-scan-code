@@ -1,0 +1,87 @@
+= CloudBees action: Scan with SonarQube
+
+If you already are running a centralized SonarQube instance, use this action to scan a Git repository with the SonarQube static analysis scanner. 
+The data collected from the scans is available in your SonarQube reports, and the results are also displayed in the CloudBees platform analytics dashboards.
+
+NOTE: If you do not have SonarQube already installed, use the https://github.com/cloudbees-io/sonarqube-bundled-sast-scan-code[Scan with SonarQube bundled action] instead.
+
+== Inputs
+
+[cols="2a,1a,1a,3a",options="header"]
+.Input details
+|===
+
+| Input name
+| Data type
+| Required?
+| Description
+
+| `server-url`
+| String
+| Yes
+| The SonarQube server URL.
+
+| `username`
+| String
+| Yes
+| The SonarQube username.
+
+| `password`
+| String
+| Yes
+| The SonarQube password.
+
+| `language`
+| String
+| No
+| The language of your Git repository code base.
+Refer to the supported languages below.
+
+|===
+
+== Supported languages
+
+[cols="1a,1a",options="header"]
+.Supported languages with inputs
+|===
+
+| Supported language
+| Input format
+
+| Go
+| `LANGUAGE_GO`
+
+| JavaScript
+| `LANGUAGE_JS`
+
+| Python
+| `LANGUAGE_PYTHON`
+
+|===
+
+== Usage example
+
+In your YAML file, add:
+
+[source,yaml]
+----
+
+      - name: Scan with SonarQube
+        uses: cloudbees-io/sonarqube-sast-scan-code@v1
+        with:
+          server-url: ${{ vars.SONARQUBE_SERVER_URL }}
+          username: ${{ secrets.SONARQUBE_USERNAME }}
+          password: ${{ secrets.SONARQUBE_PASSWORD }}
+          language: "LANGUAGE_GO"
+
+----
+
+== License
+
+This code is made available under the 
+link:https://opensource.org/license/mit/[MIT license].
+
+== References
+
+* Learn more about link:https://docs.cloudbees.com/docs/cloudbees-saas-platform-actions/latest/[using actions in CloudBees workflows].
+* Learn about link:https://docs.cloudbees.com/docs/cloudbees-saas-platform/latest/[the CloudBees platform].
