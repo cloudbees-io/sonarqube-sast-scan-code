@@ -15,7 +15,7 @@ runs:
   steps:
     - id: run-orchestrator
       name: sonarqube
-      uses: docker://public.ecr.aws/l7o7z1g8/actions/sonarqube-sast-actions:main-49fcb5a60a702dd7bc036c4a94ea0c4a74ea7fe2
+      uses: docker://public.ecr.aws/l7o7z1g8/actions/sonarqube-sast-actions:main-225c9793d1539cd728b867e7e593bad630733e26
       shell: bash
       env:
         CONFIG_JSON: '{\"metaInfo\":{\"url\":\"${{ inputs.server-url }}/\",\"username\":\"${{ inputs.username }}\",\"password\":\"${{ inputs.password }}\",\"client_secret\":\"NA\",\"toolName\":\"sonarqube\"},\"orchestratorInfo\":{\"language\":\"${{ inputs.language }}\",\"assetType\":\"CODE\",\"assetIdentifier\":\"${{ cloudbees.scm.repositoryUrl }}\",\"profileIdentifier\":\"${{ cloudbees.scm.branch }}\"},\"metaInformation\":{\"actor\":\"SCM-Bot\",\"commit_id\":\"${{ cloudbees.scm.sha }}\",\"tenent_info\":\"NA\",\"scanner_type\":\"SAST\"}}'
