@@ -18,7 +18,6 @@ runs:
       uses: docker://public.ecr.aws/l7o7z1g8/actions/sonarqube-sast-actions:main-107ca2b9ab3652886a903eb6094f460aee4f08d8
       shell: bash
       env:
-        CONFIG_JSON: '{\"metaInfo\":{\"url\":\"${{ inputs.server-url }}/\",\"username\":\"${{ inputs.username }}\",\"password\":\"${{ inputs.password }}\",\"client_secret\":\"NA\",\"toolName\":\"sonarqube\"},\"orchestratorInfo\":{\"language\":\"${{ inputs.language }}\",\"assetType\":\"CODE\",\"assetIdentifier\":\"${{ cloudbees.scm.repositoryUrl }}\",\"profileIdentifier\":\"${{ cloudbees.scm.branch }}\"},\"metaInformation\":{\"actor\":\"SCM-Bot\",\"commit_id\":\"${{ cloudbees.scm.sha }}\",\"tenent_info\":\"NA\",\"scanner_type\":\"SAST\"}}'
         RUN_ID: ${{ cloudbees.run_id }}
         STEP_ID: ${{ step.internal.id }}
         JOB_ID: ${{ job.id }}
@@ -29,5 +28,21 @@ runs:
         echo "RUN ID: ${{ cloudbees.run_id }}"
         echo "Job ID: ${{ job.id }}"
         echo "Step ID: ${{ step.internal.id }}"
+
+        # fetch checkedout repo url and branch into assetIdentifier and profileIdentifier
+        apt-get update
+        apt-get install -y git
+
+        assetIdentifier=$(git config --get remote.origin.url)
+        currentBranch=$(git branch | grep "*")
+        profileIdentifier=${currentBranch:2}
+
+
+        CONFIG_JSON='{\"metaInfo\":{\"url\":\"${{ inputs.server-url }}/\",\"username\":\"${{ inputs.username }}\",\"password\":\"${{ inputs.password }}\",\"client_secret\":\"NA\",\"toolName\":\"sonarqube\"},\"orchestratorInfo\":{\"language\":\"${{ inputs.language }}\",\"assetType\":\"CODE\",\"assetIdentifier\":\"'
+        CONFIG_JSON+=${assetIdentifier}
+        CONFIG_JSON+='\",\"profileIdentifier\":\"'
+        CONFIG_JSON+=${profileIdentifier}
+        CONFIG_JSON+='\"},\"metaInformation\":{\"actor\":\"SCM-Bot\",\"commit_id\":\"${{ cloudbees.scm.sha }}\",\"tenent_info\":\"NA\",\"scanner_type\":\"SAST\"}}'
+
         cd /
         /bin/bash -c "java -jar ./executables/sonarqube-analyzer.jar & while ! nc -z localhost 5001; do sleep 1; done && ./executables/orchestrator -scanConfig \"${CONFIG_JSON}\" execute-analyser && exit"
