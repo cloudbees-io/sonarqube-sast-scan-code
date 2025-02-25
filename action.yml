@@ -15,7 +15,7 @@ runs:
   steps:
     - id: run-orchestrator
       name: sonarqube
-      uses: docker://public.ecr.aws/l7o7z1g8/actions/sonarqube-sast-actions:main-107ca2b9ab3652886a903eb6094f460aee4f08d8
+      uses: docker://public.ecr.aws/l7o7z1g8/actions/sonarqube-sast-actions:main-403469d60c81598ca0e5fcfa67c824915c471d68
       shell: bash
       env:
         RUN_ID: ${{ cloudbees.run_id }}
