@@ -10,10 +10,26 @@ inputs:
     required: true
   language:
     required: false
+outputs:
+  critical-count:
+    description: A string containing the number of Critical security findings discovered during the scan.
+    value: ${{steps.sonarqube.outputs.critical-count}}
+  very-high-count:
+    description: A string containing the number of Very High security findings discovered during the scan.
+    value: ${{steps.sonarqube.outputs.very-high-count}}
+  high-count:
+    description: A string containing the number of High security findings discovered during the scan.
+    value: ${{steps.sonarqube.outputs.high-count}}
+  medium-count:
+    description: A string containing the number of Medium security findings discovered during the scan.
+    value: ${{steps.sonarqube.outputs.medium-count}}
+  low-count:
+    description: A string containing the number of Low security findings discovered during the scan.
+    value: ${{steps.sonarqube.outputs.low-count}}
 runs:
   using: composite
   steps:
-    - id: run-orchestrator
+    - id: sonarqube
       name: sonarqube
       uses: docker://public.ecr.aws/l7o7z1g8/actions/sonarqube-sast-actions:main-39c8ba8a20e4243a257c5726d3b590fed3e12d9e
       shell: bash
