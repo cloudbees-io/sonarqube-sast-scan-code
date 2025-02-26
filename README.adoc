@@ -51,6 +51,9 @@ Refer to the supported languages below.
 | Go
 | `LANGUAGE_GO`
 
+| Java
+| `LANGUAGE_JAVA`
+
 | JavaScript
 | `LANGUAGE_JS`
 
