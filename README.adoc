@@ -57,6 +57,9 @@ Refer to the supported languages below.
 | Python
 | `LANGUAGE_PYTHON`
 
+| Java
+| `LANGUAGE_JAVA`
+
 |===
 
 == Usage example
