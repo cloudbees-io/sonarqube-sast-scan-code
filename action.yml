@@ -5,9 +5,11 @@ inputs:
   server-url:
     required: true
   username:
-    required: true
+    required: false
   password:
-    required: true
+    required: false
+  access-token:
+    required: false
   language:
     required: false
 outputs:
@@ -31,7 +33,7 @@ runs:
   steps:
     - id: sonarqube
       name: sonarqube
-      uses: docker://public.ecr.aws/l7o7z1g8/actions/sonarqube-sast-actions:main-39c8ba8a20e4243a257c5726d3b590fed3e12d9e
+      uses: docker://public.ecr.aws/l7o7z1g8/actions/sonarqube-sast-actions:main-a826d5fca522735f794de51e0de7608b71df3cb8
       shell: bash
       env:
         RUN_ID: ${{ cloudbees.run_id }}
@@ -54,7 +56,7 @@ runs:
         profileIdentifier=${currentBranch:2}
 
 
-        CONFIG_JSON='{\"metaInfo\":{\"url\":\"${{ inputs.server-url }}/\",\"username\":\"${{ inputs.username }}\",\"password\":\"${{ inputs.password }}\",\"client_secret\":\"NA\",\"toolName\":\"sonarqube\"},\"orchestratorInfo\":{\"language\":\"${{ inputs.language }}\",\"assetType\":\"CODE\",\"assetIdentifier\":\"'
+        CONFIG_JSON='{\"metaInfo\":{\"url\":\"${{ inputs.server-url }}/\",\"username\":\"${{ inputs.username }}\",\"password\":\"${{ inputs.password }}\",\"accessToken\":\"${{ inputs.access-token }}\",\"client_secret\":\"NA\",\"toolName\":\"sonarqube\"},\"orchestratorInfo\":{\"language\":\"${{ inputs.language }}\",\"assetType\":\"CODE\",\"assetIdentifier\":\"'
         CONFIG_JSON+=${assetIdentifier}
         CONFIG_JSON+='\",\"profileIdentifier\":\"'
         CONFIG_JSON+=${profileIdentifier}
