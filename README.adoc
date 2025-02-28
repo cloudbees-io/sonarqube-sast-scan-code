@@ -21,14 +21,19 @@ NOTE: If you do not have SonarQube already installed, use the https://github.com
 | Yes
 | The SonarQube server URL.
 
+| `access-token`
+| String
+| Required if `username` and `password` are not specified.
+| The SonarQube access token.
+
 | `username`
 | String
-| Yes
+| Required if `access-token` is not specified.
 | The SonarQube username.
 
 | `password`
 | String
-| Yes
+| Required if `access-token` is not specified.
 | The SonarQube password.
 
 | `language`
@@ -62,21 +67,33 @@ Refer to the supported languages below.
 
 |===
 
-== Usage example
+== Usage examples
 
-In your YAML file, add:
+In the following example, a Sonarqube access token is used for authentication:
 
 [source,yaml]
 ----
 
       - name: Scan with SonarQube
-        uses: cloudbees-io/sonarqube-sast-scan-code@v1
+        uses: https://github.com/cloudbees-io/sonarqube-sast-scan-code@v1
+        with:
+          server-url: ${{ vars.SONARQUBE_SERVER_URL }}
+          access-token: ${{ secrets.SONARQUBE_USER_TOKEN }}
+          language: "LANGUAGE_JAVA"
+----
+
+In the following example, username and password credentials are used for authentication:
+
+[source,yaml]
+----
+
+      - name: Scan with SonarQube
+        uses: https://github.com/cloudbees-io/sonarqube-sast-scan-code@v1
         with:
           server-url: ${{ vars.SONARQUBE_SERVER_URL }}
           username: ${{ secrets.SONARQUBE_USERNAME }}
           password: ${{ secrets.SONARQUBE_PASSWORD }}
           language: "LANGUAGE_GO"
-
 ----
 
 == License
