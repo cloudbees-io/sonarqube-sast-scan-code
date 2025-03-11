@@ -65,6 +65,9 @@ Refer to the supported languages below.
 | Python
 | `LANGUAGE_PYTHON`
 
+| Php
+| `LANGUAGE_PHP`
+
 |===
 
 == Usage examples
