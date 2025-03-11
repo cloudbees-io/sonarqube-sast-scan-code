@@ -29,7 +29,7 @@ For more information, refer to the link:https://docs.sonarsource.com/sonarqube-s
 
 == Inputs
 
-[cols="2a,1a,3a,3a",options="header"]
+[cols="3a,1a,4a,3a",options="header"]
 .Input details
 |===
 
