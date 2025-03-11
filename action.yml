@@ -33,7 +33,7 @@ runs:
   steps:
     - id: sonarqube
       name: sonarqube
-      uses: docker://public.ecr.aws/l7o7z1g8/actions/sonarqube-sast-actions:main-a826d5fca522735f794de51e0de7608b71df3cb8
+      uses: docker://public.ecr.aws/l7o7z1g8/actions/sonarqube-sast-actions:main-69fa588196cb4f1965f00df6700fb136aa23a62a
       shell: bash
       env:
         RUN_ID: ${{ cloudbees.run_id }}
