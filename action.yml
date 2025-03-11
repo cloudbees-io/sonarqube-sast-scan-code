@@ -12,22 +12,22 @@ inputs:
     required: false
   language:
     required: false
-outputs:
-  critical-count:
-    description: A string containing the number of Critical security findings discovered during the scan.
-    value: ${{steps.sonarqube.outputs.critical-count}}
-  very-high-count:
-    description: A string containing the number of Very High security findings discovered during the scan.
-    value: ${{steps.sonarqube.outputs.very-high-count}}
-  high-count:
-    description: A string containing the number of High security findings discovered during the scan.
-    value: ${{steps.sonarqube.outputs.high-count}}
-  medium-count:
-    description: A string containing the number of Medium security findings discovered during the scan.
-    value: ${{steps.sonarqube.outputs.medium-count}}
-  low-count:
-    description: A string containing the number of Low security findings discovered during the scan.
-    value: ${{steps.sonarqube.outputs.low-count}}
+  outputs:
+    critical-count:
+      description: A string containing the number of Critical security findings discovered during the scan.
+      value: ${{steps.sonarqube.outputs.critical-count}}
+    very-high-count:
+      description: A string containing the number of Very High security findings discovered during the scan.
+      value: ${{steps.sonarqube.outputs.very-high-count}}
+    high-count:
+      description: A string containing the number of High security findings discovered during the scan.
+      value: ${{steps.sonarqube.outputs.high-count}}
+    medium-count:
+      description: A string containing the number of Medium security findings discovered during the scan.
+      value: ${{steps.sonarqube.outputs.medium-count}}
+    low-count:
+      description: A string containing the number of Low security findings discovered during the scan.
+      value: ${{steps.sonarqube.outputs.low-count}}
 runs:
   using: composite
   steps:
