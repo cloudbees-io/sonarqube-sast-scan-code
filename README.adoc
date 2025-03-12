@@ -5,9 +5,31 @@ The data collected from the scans is available in your SonarQube reports, and th
 
 NOTE: If you do not have SonarQube already installed, use the https://github.com/cloudbees-io/sonarqube-bundled-sast-scan-code[Scan with SonarQube bundled action] instead.
 
+== Prerequisites
+
+To use the Scan with SonarQube action, you must declare all metadata in the file `sonar-project.properties` in the base directory of your SonarQube Server instance.
+You *must* include the location of the sources to be scanned in this metadata.
+
+In the following `sonar-project.properties` file example, the location of the sources to be analyzed is `src`.
+
+[source,bash]
+----
+
+sonar.projectKey=example:project
+sonar.projectName=My Project
+sonar.projectVersion=1.0
+
+sonar.sources=src
+sonar.tests=src/tests
+sonar.sourceEncoding=UTF-8
+
+----
+
+For more information, refer to the link:https://docs.sonarsource.com/sonarqube-server/latest/project-administration/analysis-scope/[SonarQube analysis scope documentation].
+
 == Inputs
 
-[cols="2a,1a,1a,3a",options="header"]
+[cols="2a,1a,3a,2a",options="header"]
 .Input details
 |===
 
@@ -62,11 +84,11 @@ Refer to the supported languages below.
 | JavaScript
 | `LANGUAGE_JS`
 
+| PHP
+| `LANGUAGE_PHP`
+
 | Python
 | `LANGUAGE_PYTHON`
-
-| Php
-| `LANGUAGE_PHP`
 
 |===
 
@@ -77,7 +99,7 @@ In the following example, a Sonarqube access token is used for authentication:
 [source,yaml]
 ----
 
-      - name: Scan with SonarQube
+      - name: Scan with SonarQube with a token
         uses: https://github.com/cloudbees-io/sonarqube-sast-scan-code@v1
         with:
           server-url: ${{ vars.SONARQUBE_SERVER_URL }}
@@ -90,7 +112,7 @@ In the following example, username and password credentials are used for authent
 [source,yaml]
 ----
 
-      - name: Scan with SonarQube
+      - name: Scan with SonarQube with a password
         uses: https://github.com/cloudbees-io/sonarqube-sast-scan-code@v1
         with:
           server-url: ${{ vars.SONARQUBE_SERVER_URL }}
